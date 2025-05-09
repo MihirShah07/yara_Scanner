@@ -1,0 +1,18 @@
+OpenSSH = link.(192.168.17.152)
+usage: ssh (close) 
+HISTFILE                //backdoor
+
+Kernel32.dll
+DebugActiveProcess = False      //debugging activate
+
+DisableTaskMgr = True
+Disable_Location = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" nocase                 //task manager diabled
+Disable_Location = False
+
+Firewall_parameter = SYSTEM\\CurrentControlSet\\Services\\SharedAccess\\Parameters\\FirewallPolicy nocase
+Firewall_parameter = Negative
+RegSetValue
+FirewallPolicy = Terminate
+EnableFirewall = False
+FirewallDisableNotify = True
+netsh firewall add allowedprogram   //firewall

@@ -1,0 +1,19 @@
+ActivateTaskMgr = True
+
+ActivateFirewall = True
+da39a3ee5e6b
+4b0d3255bfe
+f9560189
+0afd80709
+
+e3b0c442
+98fc1c149a
+
+fbf4c8996f
+b92427ae41
+e4649b93
+4ca495991
+b7852b855
+098f6bcd4621d
+373cade4e83262
+84c4d1c2c3f1a4e
