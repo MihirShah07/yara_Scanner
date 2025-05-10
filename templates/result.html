@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YARA Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body class="{% if yara_data and yara_data['matches'] %}unsafe{% else %}safe{% endif %}">
+
+    <h1>YARA Scanner</h1>
+
+    <form action="/scan" method="post">
+        <label>Enter File Name to test:</label>
+        <input type="text" name="file_name" required>
+        <button type="submit">Get YARA Result</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if yara_data %}
+
+        <div class="message"><h2>Scanned File: {{ yara_data['file_checked'] }}</h2></div>
+
+        {% if yara_data['matches'] %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rule File</th>
+                        <th>Conditions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match in yara_data['matches'] %}
+                    <tr>
+                        <td>{{ match['Rule'] }}</td>
+                        <td>
+                            <ul>
+                                {% for condition in match['Conditions'] %}
+                                <li>{{ condition }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="message">🚫 File not safe!</div>
+        {% else %}
+            <div class="message">✅ File safe!</div>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
