@@ -1,36 +1,4 @@
 {
-    "file_checked": "backdoorplant.txt",
-    "matches": [
-        {
-            "Rule": "anti_dbg.yar",
-            "Conditions": [
-                "Kernel32.dll",
-                "DebugActiveProcess"
-            ]
-        },
-        {
-            "Rule": "backdoor_ssh.yar",
-            "Conditions": [
-                "OpenSSH",
-                "HISTFILE"
-            ]
-        },
-        {
-            "Rule": "DebuggerHiding__Active.yar",
-            "Conditions": [
-                "DebugActiveProcess"
-            ]
-        },
-        {
-            "Rule": "disable_firewall.yar",
-            "Conditions": [
-                "RegSetValue",
-                "FirewallPolicy",
-                "FirewallPolicy",
-                "EnableFirewall",
-                "FirewallDisableNotify",
-                "netsh firewall add allowedprogram"
-            ]
-        }
-    ]
+    "file_checked": "uploads\\app.py",
+    "matches": []
 }

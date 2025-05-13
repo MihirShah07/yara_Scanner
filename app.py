@@ -1,8 +1,14 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import os
 from yara_script import run_yara
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Create upload folder if it doesn't exist
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
 def index():
@@ -10,12 +16,19 @@ def index():
 
 @app.route('/scan', methods=['POST'])
 def scan():
-    file_to_check = request.form['file_name'] + ".txt"
+    if 'file' not in request.files:
+        return render_template('result.html', yara_data=None, error="No file part in the request.")
 
-    if not os.path.isfile(file_to_check):
-        return render_template('result.html', yara_data=None, error=f"File '{file_to_check}' not found!")
+    uploaded_file = request.files['file']
 
-    yara_results = run_yara(file_to_check)
+    if uploaded_file.filename == '':
+        return render_template('result.html', yara_data=None, error="No selected file.")
+
+    filename = secure_filename(uploaded_file.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    uploaded_file.save(filepath)
+
+    yara_results = run_yara(filepath)
 
     if "error" in yara_results:
         return render_template('result.html', yara_data=None, error=yara_results["error"])
@@ -23,4 +36,4 @@ def scan():
     return render_template('result.html', yara_data=yara_results)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+    app.run(host='0.0.0.0', port=5000, debug=True)

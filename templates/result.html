@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <title>YARA Scanner</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 <body class="{% if yara_data and yara_data['matches'] %}unsafe{% else %}safe{% endif %}">
 
     <h1>YARA Scanner</h1>
 
-    <form action="/scan" method="post">
-        <label>Enter File Name to test:</label>
-        <input type="text" name="file_name" required>
-        <button type="submit">Get YARA Result</button>
+    <!-- Upload form instead of text input -->
+    <form action="/scan" method="post" enctype="multipart/form-data">
+        <label>Select a file to scan:</label>
+        <input type="file" name="file" required>
+        <button type="submit">Scan File</button>
     </form>
 
     {% if error %}
@@ -21,7 +21,6 @@
     {% endif %}
 
     {% if yara_data %}
-
         <div class="message"><h2>Scanned File: {{ yara_data['file_checked'] }}</h2></div>
 
         {% if yara_data['matches'] %}
