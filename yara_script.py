@@ -5,7 +5,7 @@ import json
 def run_yara(file_to_check, rules_folder="rules"):
     # Validate the file existence
     if not os.path.isfile(file_to_check):
-        return {"error": f"File '{file_to_check}' not found."}
+        return json.dumps({"error": f"File '{file_to_check}' not found."}, indent=4)
 
     print(f"\n{file_to_check} signature matches in:\n")
 
@@ -50,9 +50,6 @@ def run_yara(file_to_check, rules_folder="rules"):
             except Exception as e:
                 print(f"Error running YARA on {rule_file}: {e}")
 
-    # Save results to JSON
-    output_filename = "yara_output.json"
-    with open(output_filename, "w") as json_file:
-        json.dump(yara_results, json_file, indent=4)
-
+    # Return results as JSON string
+    # return json.dumps(yara_results, indent=4)
     return yara_results
