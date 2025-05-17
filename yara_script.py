@@ -21,7 +21,7 @@ def run_yara(file_to_check, rules_folder="rules"):
             rule_path = os.path.join(rules_folder, rule_file)
 
             # YARA command
-            command = f"yara64 -s {rule_path} {file_to_check}"
+            command = f"/opt/yara-4.1.0/yara -s {rule_path} {file_to_check}"
 
             try:
                 result = subprocess.run(command, shell=True, capture_output=True, text=True)

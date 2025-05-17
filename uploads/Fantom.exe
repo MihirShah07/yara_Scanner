@@ -1,5 +1,0 @@
-OpenSSH = link.(192.168.17.152)
-usage: ssh (close) 
-HISTFILE                //backdoor
-
-Kernel32.dll
